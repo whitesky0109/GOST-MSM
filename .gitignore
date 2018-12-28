@@ -1,0 +1,6 @@
+download
+node_modules
+*.zip
+
+yarn.lock
+*.log

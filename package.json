@@ -1,0 +1,20 @@
+{
+  "name": "clawer",
+  "version": "0.0.1",
+  "description": "gunwoo development clawer in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^3.0.0",
+    "htmldom": "^3.0.8",
+    "jquery": "^3.3.1",
+    "jsdom": "^13.1.0",
+    "phantom": "^6.0.3",
+    "phantomjs": "^2.1.7",
+    "webpage": "^0.3.0"
+  }
+}
