@@ -86,6 +86,7 @@ class MangaDownloader {
     }
 }
 
-module.exports = {
-    MangaDownloader,
-}
+process.on("message", ({ title, links }) => {
+    const md = new MangaDownloader(title, links);
+    md.download();
+});

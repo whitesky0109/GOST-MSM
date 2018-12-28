@@ -1,6 +1,5 @@
-const { spawn } = require('child_process');
+const { fork } = require('child_process');
 const { MangaShowMeCrawler } = require("./mangashowmeCrawler");
-const { MangaDownloader } = require("./MangaDownloader");
 
 (async function () {
     const mc = new MangaShowMeCrawler();
@@ -9,8 +8,12 @@ const { MangaDownloader } = require("./MangaDownloader");
 
     for (const item of list) {
         console.log(`try ${item.title} downloading...`)
-        const links = await mc.getMangaLinks(item);
-        const md = new MangaDownloader(item.title, links);
-        md.download();
+        mc.getMangaLinks(item).then((links) => {
+            let cp = fork(`${__dirname}/MangaDownloader.js`);
+            cp.send({
+                title: item.title,
+                links
+            });
+        })
     }
 })();
