@@ -1,7 +1,9 @@
 download
 node_modules
-*.zip
+dist
+
 
 yarn.lock
+*.zip
 *.log
 *.json
