@@ -38,6 +38,7 @@ class MangaShowMeCrawler extends HtmlCrawler {
         for (const slot of slotList) {
             const title = getTitle(slot);
             const link = getLink(slot);
+
             list.push({
                 title,
                 link,
