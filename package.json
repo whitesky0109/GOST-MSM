@@ -4,7 +4,8 @@
   "description": "gunwoo development clawer in nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc-watch --onSuccess \"node ./dist/index.js\" --compiler typescript/bin/tsc"
   },
   "author": "",
   "license": "ISC",
@@ -13,8 +14,11 @@
     "htmldom": "^3.0.8",
     "jquery": "^3.3.1",
     "jsdom": "^13.1.0",
-    "phantom": "^6.0.3",
-    "phantomjs": "^2.1.7",
-    "webpage": "^0.3.0"
+    "phantom": "^6.0.3"
+  },
+  "devDependencies": {
+    "tsc-watch": "^1.0.31",
+    "typescript": "^3.2.2",
+    "yarn": "^1.12.3"
   }
 }

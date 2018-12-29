@@ -1,20 +1,18 @@
-const http = require("http");
-const https = require('https');
-const { URL } = require("url");
+import * as http from "http";
+import * as https from "https";
 
-const fs = require('fs');
-const { Transform } = require('stream');
+import * as fs from "fs";
+import {Transform} from 'stream';
 
 const archiver = require('archiver');
 
 // child process
 class MangaDownloader {
+    downloadBasePath: string = "download";
+    downloadedBasePath: string = "."
 
-    constructor(title, urlList) {
-        this.title = title;
-        this.urlList = urlList;
-        this.downloadBasePath = "download";
-        this.downloadedBasePath = ".";
+
+    constructor(private title, private urlList) {
 
         this.createDownloadPath();
     }
@@ -27,7 +25,7 @@ class MangaDownloader {
     }
 
     async downloads() {
-        const { title, urlList, downloadBasePath } = this;
+        const { title, urlList } = this;
         if (fs.existsSync(`${title}.zip`)) {
             console.log("already downloaded file");
             return true;
@@ -58,7 +56,7 @@ class MangaDownloader {
         return true;
     }
 
-    async getFile(url) {
+    async getFile(url): Promise<any> {
         const urlObj = new URL(url);
         const protocol = (urlObj.protocol === "https:") ? https : http;
 
@@ -103,7 +101,7 @@ class MangaDownloader {
 
     zip() {
         return new Promise((resolve, reject) => {
-            const { title, downloadBasePath, downloadedBasePath } = this;
+            const { title, downloadBasePath } = this;
             const archive = archiver("zip");
             const path = `${downloadBasePath}/${title}`;
     

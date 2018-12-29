@@ -1,9 +1,11 @@
-const { HtmlCrawler } = require("./HtmlCrawler");
 
-class MangaShowMeCrawler extends HtmlCrawler {
+import HtmlCrawler from "./HtmlCrawler";
+
+export default class MangaShowMeCrawler extends HtmlCrawler {
+    private host: string = "https://mangashow.me";
+
     constructor() {
         super();
-        this.host = "https://mangashow.me";
     }
 
     async readMangaList(manga_name) {
@@ -61,7 +63,3 @@ class MangaShowMeCrawler extends HtmlCrawler {
         return links;
     }
 }
-
-module.exports = {
-    MangaShowMeCrawler
-};

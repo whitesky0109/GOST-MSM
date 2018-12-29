@@ -1,11 +1,11 @@
-const fs = require("fs");
+import * as fs from "fs";
 
-class MangaSync {
+export default class MangaSync {
+    private file: string = "setting.json";
+    private meta: any;
 
     constructor() {
-        this.file = "setting.json";
-
-        const fileContent = fs.existsSync(`${this.file}`)
+        const fileContent: any = fs.existsSync(`${this.file}`)
             ? fs.readFileSync(this.file)
             : JSON.stringify({
                 manga: {},
@@ -42,8 +42,4 @@ class MangaSync {
         return manga[name];
     }
 
-}
-
-module.exports = {
-    MangaSync,
 }
