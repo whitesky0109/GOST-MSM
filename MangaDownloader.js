@@ -27,7 +27,7 @@ class MangaDownloader {
     }
 
     async downloads() {
-        const { title, urlList } = this;
+        const { title, urlList, downloadBasePath } = this;
         if (fs.existsSync(`${title}.zip`)) {
             console.log("already downloaded file");
             return true;
@@ -38,8 +38,19 @@ class MangaDownloader {
             pList.push(this.download(url));
         }
 
-        Promise.all(pList).then(() => {
-            this.zip();
+        Promise.all(pList).then(async () => {
+            let zipInfo;
+            let baseInfo = {
+                title,
+                images: urlList.length,
+            };
+            try {
+                console.log(`try ${title} zipping...`);
+                zipInfo = await this.zip();
+            } catch (e) {
+                console.error(e);
+            }
+            process.send(Object.assign(baseInfo, zipInfo,));
         }, (err) => {
             console.error(err);
         });
@@ -91,25 +102,24 @@ class MangaDownloader {
     }
 
     zip() {
-        const { title, downloadBasePath, downloadedBasePath } = this;
-        const archive = archiver("zip");
-        const path = `${downloadBasePath}/${title}`;
-
-        const output = fs.createWriteStream(`${path}.zip`);
-        output.on('close', function () {
-            console.log(`generated ${path}.zip`);
-        });
-
-        output.on('end', function () {
-            fs.rmdir(path);
-        });
-
-        archive.on('error', function (err) {
-            throw err;
-        });
-        archive.pipe(output);
-        archive.directory(path, path);
-        archive.finalize();
+        return new Promise((resolve, reject) => {
+            const { title, downloadBasePath, downloadedBasePath } = this;
+            const archive = archiver("zip");
+            const path = `${downloadBasePath}/${title}`;
+    
+            const output = fs.createWriteStream(`${path}.zip`);
+            output.on('close', function () {
+                resolve({
+                    zipFile: `${title}.zip`,
+                    bytes: archive.pointer(),
+                });
+            });
+    
+            archive.on('error', (err) => reject(err) );
+            archive.pipe(output);
+            archive.directory(path, path);
+            archive.finalize();
+        })
     }
 }
 
