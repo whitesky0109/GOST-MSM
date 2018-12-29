@@ -8,7 +8,7 @@ export default class MangaShowMeCrawler extends HtmlCrawler {
         super();
     }
 
-    async readMangaList(manga_name) {
+    async readMangaList(manga_name: string) {
         console.log(`query ${manga_name} from ${this.host}`);
         const jq = await this.read(`${this.host}/bbs/page.php`, {
             hid: "manga_detail",

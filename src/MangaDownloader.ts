@@ -12,8 +12,7 @@ class MangaDownloader {
     downloadedBasePath: string = "."
 
 
-    constructor(private title, private urlList) {
-
+    constructor(private title: string, private urlList: any[]) {
         this.createDownloadPath();
     }
 
@@ -31,14 +30,14 @@ class MangaDownloader {
             return true;
         }
 
-        const pList = [];
+        const pList: any[] = [];
         for (const url of urlList) {
             pList.push(this.download(url));
         }
 
         Promise.all(pList).then(async () => {
-            let zipInfo;
-            let baseInfo = {
+            let zipInfo: any;
+            let baseInfo: any = {
                 title,
                 images: urlList.length,
             };
@@ -57,15 +56,15 @@ class MangaDownloader {
     }
 
     async getFile(url): Promise<any> {
-        const urlObj = new URL(url);
-        const protocol = (urlObj.protocol === "https:") ? https : http;
+        const urlObj: URL = new URL(url);
+        const protocol: any = (urlObj.protocol === "https:") ? https : http;
 
         return new Promise((resolve, reject) => {
-            protocol.request(url, async (response) => {
+            protocol.request(url, async (response: any) => {
                 switch (response.statusCode) {
                     case 200: // success
-                        let data = new Transform();
-                        response.on('data', (chunk) => data.push(chunk) );
+                        let data: Transform = new Transform();
+                        response.on('data', (chunk: any) => data.push(chunk) );
                         response.on('end', () => resolve(data) );
                         break;
                     case 301: // redirect
@@ -82,14 +81,14 @@ class MangaDownloader {
         })
     }
 
-    async download(url) {
+    async download(url: any) {
         const { title, downloadBasePath } = this;
-        const path = `${downloadBasePath}/${title}`;
+        const path: string = `${downloadBasePath}/${title}`;
 
         try {
-            const data = await this.getFile(url);
+            const data: any = await this.getFile(url);
 
-            const filename = url.split("/").pop();
+            const filename: string = url.split("/").pop();
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
             }
@@ -99,13 +98,13 @@ class MangaDownloader {
         }
     }
 
-    zip() {
+    zip(): Promise<any> {
         return new Promise((resolve, reject) => {
             const { title, downloadBasePath } = this;
-            const archive = archiver("zip");
-            const path = `${downloadBasePath}/${title}`;
+            const archive: any = archiver("zip");
+            const path: string = `${downloadBasePath}/${title}`;
     
-            const output = fs.createWriteStream(`${path}.zip`);
+            const output: fs.WriteStream = fs.createWriteStream(`${path}.zip`);
             output.on('close', function () {
                 resolve({
                     zipFile: `${title}.zip`,
@@ -121,7 +120,7 @@ class MangaDownloader {
     }
 }
 
-process.on("message", ({ title, links }) => {
+process.on("message", ({ title, links }: {title: string, links: any[]}) => {
     const md = new MangaDownloader(title, links);
     md.downloads();
 });
