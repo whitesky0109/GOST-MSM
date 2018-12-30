@@ -1,6 +1,9 @@
+import "reflect-metadata";
+import {Service} from "typedi";
 
 import HtmlCrawler from "./HtmlCrawler";
 
+@Service()
 export default class MangaShowMeCrawler extends HtmlCrawler {
     private host: string = "https://mangashow.me";
 
@@ -14,6 +17,7 @@ export default class MangaShowMeCrawler extends HtmlCrawler {
             hid: "manga_detail",
             manga_name,
         });
+
         return this.parseMangaList(jq);
     }
 
@@ -30,10 +34,12 @@ export default class MangaShowMeCrawler extends HtmlCrawler {
                     break;
                 }
             }
+
             return title;
         }
         const getLink = (slot) => {
             const aTag = $(slot).find("a");
+
             return aTag.attr("href");
         }
 
@@ -46,6 +52,7 @@ export default class MangaShowMeCrawler extends HtmlCrawler {
                 link,
             });
         }
+
         return list;
     }
 

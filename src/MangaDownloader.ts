@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import {Service} from "typedi";
+
 import * as http from "http";
 import * as https from "https";
 
@@ -7,10 +10,10 @@ import {Transform} from 'stream';
 const archiver = require('archiver');
 
 // child process
+@Service()
 class MangaDownloader {
     downloadBasePath: string = "download";
     downloadedBasePath: string = "."
-
 
     constructor(private title: string, private urlList: any[]) {
         this.createDownloadPath();

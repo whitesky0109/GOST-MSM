@@ -8,15 +8,22 @@
     "watch": "tsc-watch --onSuccess \"node ./dist/index.js\" --compiler typescript/bin/tsc"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "archiver": "^3.0.0",
-    "htmldom": "^3.0.8",
     "jquery": "^3.3.1",
     "jsdom": "^13.1.0",
-    "phantom": "^6.0.3"
+    "phantom": "^6.0.3",
+    "reflect-metadata": "^0.1.12",
+    "typedi": "^0.8.0"
   },
   "devDependencies": {
+    "@types/archiver": "^2.1.2",
+    "@types/jquery": "^3.3.29",
+    "@types/jsdom": "^12.2.1",
+    "@types/node": "^10.12.18",
+    "@types/phantom": "^3.2.5",
+    "@types/reflect-metadata": "^0.1.0",
     "tsc-watch": "^1.0.31",
     "typescript": "^3.2.2",
     "yarn": "^1.12.3"

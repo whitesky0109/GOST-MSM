@@ -1,5 +1,9 @@
+import "reflect-metadata";
+import {Service} from "typedi";
+
 import * as fs from "fs";
 
+@Service()
 export default class MangaSync {
     private file: string = "setting.json";
     private meta: any;
