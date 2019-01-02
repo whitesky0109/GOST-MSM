@@ -6,4 +6,4 @@ dist
 yarn.lock
 *.zip
 *.log
-*.json
+setting.json
